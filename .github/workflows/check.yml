@@ -1,4 +1,4 @@
-name: CI
+name: Check
 
 on:
   pull_request:
@@ -21,7 +21,7 @@ jobs:
           go-version: "1.24.2"
       - uses: actions/checkout@v3
       - run: git config --global url.https://ci:$CI_GITHUB_TOKEN@github.com/.insteadOf https://github.com/
-      - run: make unit-tests
+      - run: make test
 
   lint:
     name: Lint
