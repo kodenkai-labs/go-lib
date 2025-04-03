@@ -2,7 +2,7 @@
 test:
 	@echo "  >  Running unit tests"
 	go clean -testcache
-	go test -coverprofile=coverage -cover -v ./internal... ./pkg...
+	go test -coverprofile=coverage -cover -v ./...
 
 .PHONY: tests-coverage
 test-coverage: test
