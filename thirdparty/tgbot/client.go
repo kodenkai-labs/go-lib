@@ -23,8 +23,7 @@ func NewClient(token string) (*Client, error) {
 }
 
 func (c *Client) SetWebhook(webhookURL string) error {
-	_, err := c.bot.SetWebhook(webhookURL, nil)
-	if err != nil {
+	if _, err := c.bot.SetWebhook(webhookURL, nil); err != nil {
 		return fmt.Errorf("set tg bot webhook: %w", err)
 	}
 

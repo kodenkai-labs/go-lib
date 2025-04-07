@@ -7,9 +7,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CORSMiddleware(preflightCacheMaxAge time.Duration, alloOrigins []string) gin.HandlerFunc {
+func CORSMiddleware(preflightCacheMaxAge time.Duration, allowOrigins []string) gin.HandlerFunc {
 	return cors.New(cors.Config{
-		AllowOrigins: alloOrigins,
+		AllowOrigins: allowOrigins,
 		AllowMethods: []string{"POST", "PUT", "PATCH", "GET", "DELETE", "OPTIONS"},
 		AllowHeaders: []string{
 			"Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token",
