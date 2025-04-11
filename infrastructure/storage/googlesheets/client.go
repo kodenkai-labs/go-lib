@@ -40,3 +40,23 @@ func New(credsBase64 string) (*Client, error) {
 		SheetsService: srv,
 	}, nil
 }
+
+func (c *Client) GetValuesByRange(ctx context.Context, sheetID, range_ string) ([][]any, error) {
+	resp, err := c.SheetsService.Spreadsheets.Values.Get(sheetID, range_).Do()
+	if err != nil || resp.HTTPStatusCode != 200 {
+		return nil, fmt.Errorf("get values: %w", err)
+	}
+
+	return resp.Values, nil
+}
+
+func (c *Client) InsertValues(ctx context.Context, sheetID, range_ string, values [][]any) error {
+	resp, err := c.SheetsService.Spreadsheets.Values.Append(
+		sheetID, range_, &sheets.ValueRange{Values: values},
+	).ValueInputOption("USER_ENTERED").Do()
+	if err != nil || resp.HTTPStatusCode != 200 {
+		return fmt.Errorf("insert values: %w", err)
+	}
+
+	return nil
+}
