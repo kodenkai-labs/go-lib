@@ -60,3 +60,14 @@ func (c *Client) InsertValues(ctx context.Context, sheetID, range_ string, value
 
 	return nil
 }
+
+func (c *Client) UpdateValues(ctx context.Context, sheetID, range_ string, values [][]any) error {
+	resp, err := c.SheetsService.Spreadsheets.Values.Update(
+		sheetID, range_, &sheets.ValueRange{Values: values},
+	).ValueInputOption("USER_ENTERED").Do()
+	if err != nil || resp.HTTPStatusCode != 200 {
+		return fmt.Errorf("update values: %w", err)
+	}
+
+	return nil
+}
