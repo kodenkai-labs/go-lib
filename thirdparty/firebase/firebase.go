@@ -33,7 +33,7 @@ func (c *Client) Close() error {
 	return c.client.Close()
 }
 
-func (c *Client) AddDocument(ctx context.Context, collection string, data map[string]interface{}) error {
+func (c *Client) AddDocument(ctx context.Context, collection string, data map[string]any) error {
 	_, _, err := c.client.Collection(collection).Add(ctx, data)
 	if err != nil {
 		return fmt.Errorf("add document: %w", err)

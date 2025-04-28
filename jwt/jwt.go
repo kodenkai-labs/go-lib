@@ -28,7 +28,7 @@ func GenerateToken(secretKey string, claims jwt.Claims) (string, error) {
 // ParseToken parses and validates the token string, returning the claims if valid.
 func ParseTokenWithClaims(secretKey, tokenString string, claims jwt.Claims) error {
 	// Parse the token with the secret key and validate it
-	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (any, error) {
 		// Ensure the token's signing method matches the expected method
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, ErrUnexpectedSigningMethod
