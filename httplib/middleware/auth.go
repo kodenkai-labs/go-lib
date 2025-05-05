@@ -71,9 +71,9 @@ func AuthMiddleware(accessTokenSecret string) gin.HandlerFunc {
 			return
 		}
 
-		c.Request.Header.Set(httplib.SessionDataHeaderKey, claims.Data)
-		c.Request.Header.Set(httplib.ClientIDHeaderKey, clientID)
-		c.Request.Header.Set(httplib.RefreshTokenHeaderKey, refreshToken)
+		c.Set(httplib.SessionDataKey, claims.Data)
+		c.Set(httplib.ClientIDKey, clientID)
+		c.Set(httplib.RefreshTokenKey, refreshToken)
 
 		c.Next()
 	}
@@ -97,8 +97,8 @@ func CookiesMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		c.Request.Header.Set(httplib.ClientIDHeaderKey, clientID)
-		c.Request.Header.Set(httplib.RefreshTokenHeaderKey, refreshToken)
+		c.Set(httplib.ClientIDKey, clientID)
+		c.Set(httplib.RefreshTokenKey, refreshToken)
 
 		c.Next()
 	}
