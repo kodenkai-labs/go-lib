@@ -46,7 +46,7 @@ func AuthMiddleware(accessTokenSecret string) gin.HandlerFunc {
 			return
 		}
 
-		claims := jwt.Claims{}
+		claims := jwt.DefaultClaims{}
 		err := jwt.ParseTokenWithClaims(splitToken[1], accessTokenSecret, &claims)
 		if err != nil {
 			httplib.HandleError(c, errlib.NewAppError(err, errlib.UnauthorizedCode, errlib.SlugInvalidAccessToken))
