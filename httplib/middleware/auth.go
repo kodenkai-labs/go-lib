@@ -78,7 +78,7 @@ func AuthMiddleware(accessTokenSecret string) gin.HandlerFunc {
 	}
 }
 
-func CookiesMiddleware() gin.HandlerFunc {
+func CookiesMiddleware(refreshTokenSecret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		clientID, err := getClientIDFromCookie(c)
 		if err != nil && !errors.Is(err, http.ErrNoCookie) {
@@ -96,6 +96,15 @@ func CookiesMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		claims := jwt.DefaultClaims{}
+		if err := jwt.ParseTokenWithClaims(refreshTokenSecret, refreshToken, &claims); err != nil {
+			httplib.HandleError(c, errlib.NewAppError(err, errlib.UnauthorizedCode, errlib.SlugInvalidRefreshToken))
+			c.Abort()
+
+			return
+		}
+
+		c.Set(httplib.SessionDataKey, claims.Data)
 		c.Set(httplib.ClientIDKey, clientID)
 		c.Set(httplib.RefreshTokenKey, refreshToken)
 
